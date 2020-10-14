@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 
@@ -59,11 +62,20 @@ class GoogleController extends Controller
      */
     private function getUser(object $googleUser)
     {
-        $model = User::firstOrNew(['email' => $googleUser->getEmail()]);
-        $model->google_id = $googleUser->getId();
-        $model->name = $googleUser->getName();
-        $model->save();
+        $user = User::firstOrNew(['email' => $googleUser->getEmail()]);
 
-        return $model;
+        // Generate a new password
+        if (!$user->password) {
+            $password = Str::random(40);
+            $user->password = Hash::make($password);
+            Session::put('password', $password);
+        }
+
+        $user->google_id = $googleUser->getId();
+        $user->name = $googleUser->getName();
+        $user->google_photo_url = $googleUser->getAvatar();
+        $user->save();
+
+        return $user;
     }
 }

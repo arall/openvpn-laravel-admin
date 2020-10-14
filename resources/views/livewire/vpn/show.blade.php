@@ -4,6 +4,27 @@
     </h2>
 </x-slot>
 
+<x-jet-dialog-modal wire:model="showPassword">
+    <x-slot name="title">
+        Your VPN password
+    </x-slot>
+
+    <x-slot name="content">
+        Here is your auto-generated VPN password. Please, store it safely on your password manager. You can change it anytime.
+
+        <div class="flex flex-col sm:justify-center items-center mt-5 pt-4 pb-4 bg-gray-200 border-dashed border-4 border-gray-600">
+            {{ $newPassword }}
+        </div>
+
+    </x-slot>
+
+    <x-slot name="footer">
+        <x-jet-button wire:click="$toggle('showPassword')">
+            I've stored the password safely
+        </x-jet-button>
+    </x-slot>
+</x-jet-dialog-modal>
+
 <div>
     <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
         <div class="mt-10 sm:mt-0">
@@ -31,7 +52,7 @@
                 </x-slot>
 
                 <x-slot name="description">
-                    {{ __('Ensure your account is using a long, random password to stay secure.') }}
+                    {{ __('If you want to reset your VPN password fill this form. Ensure your account is using a long, random password to stay secure.') }}
                 </x-slot>
 
                 <x-slot name="form">

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('dashboard');
+    return redirect('/');
 });
 
 /**
@@ -30,4 +30,4 @@ Route::get('login/google/callback', [GoogleController::class, 'callback'])->name
  */
 use App\Http\Livewire\Vpn;
 
-Route::get('/vpn', Vpn::class);
+Route::get('/', Vpn::class)->middleware('auth');
