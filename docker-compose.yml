@@ -1,0 +1,44 @@
+version: '2.4'
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - 80:80
+    links:
+      - base
+    depends_on:
+      - base
+    volumes:
+      - ./public:/app/public
+      - ./docker/nginx/logs:/var/log/nginx
+
+  base:
+    build:
+      context: .
+      dockerfile: ./docker/php-fpm/Dockerfile
+    env_file:
+      - .env
+    environment:
+        DB_HOST: db
+        DB_DATABASE: vpn
+        DB_USERNAME: vpn
+        DB_PASSWORD: vpn
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - .:/app:delegated
+      - ./docker/php-fpm/logs:/var/log/php-fpm
+
+  db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=vpn
+      - MYSQL_USER=vpn
+      - MYSQL_PASSWORD=vpn
