@@ -49,8 +49,8 @@ class GoogleController extends Controller
             abort(403);
         }
 
-        if ($user->user['hd'] != env('AUTH_DOMAIN')) {
-            abort(403, 'Only ' . env('AUTH_DOMAIN') . ' domain is allowed!');
+        if ($user->user['hd'] != getenv('AUTH_DOMAIN')) {
+            abort(403, 'Only ' . getenv('AUTH_DOMAIN') . ' domain is allowed!');
         }
     }
 
