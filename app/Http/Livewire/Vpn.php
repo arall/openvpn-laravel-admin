@@ -26,16 +26,6 @@ class Vpn extends Component
         'password' => 'required', 'string', 'min:12', 'confirmed',
     ];
 
-    /**
-     * Prepare the component.
-     *
-     * @return void
-     */
-    public function mount()
-    {
-        $this->state = auth()->user()->withoutRelations()->toArray();
-    }
-
     public function render()
     {
         $this->newPassword = Session::pull('password');
