@@ -69,17 +69,7 @@ class Vpn extends Component
 
     public function download()
     {
-        // Include the cert, key and ca
-        $data = file_get_contents(base_path('openvpn/clients/viscosity/client.ovpn'));
-        $key = file_get_contents(base_path('openvpn/clients/pki/server.key'));
-        $ca = file_get_contents(base_path('openvpn/clients/pki/ca.crt'));
-        $crt = file_get_contents(base_path('openvpn/clients/pki/server.crt'));
-        $data = str_replace('##KEY##', $key, $data);
-        $data = str_replace('##CA##', $ca, $data);
-        $data = str_replace('##CERT##', $crt, $data);
-
-        return response()->streamDownload(function () use ($data) {
-            echo $data;
-        }, 'config.ovpn');
+        $path = getenv('VPN_CLIENT_CONFIG_PATH');
+        return response()->download($path, 'config.ovpn');
     }
 }

@@ -11,7 +11,7 @@ cd /etc/openvpn/easy-rsa
 ./easyrsa build-ca nopass
 # Generate Diffie-Hellman parameters
 ./easyrsa gen-dh
-# Genrate server keypair
+# Generate server keypair
 ./easyrsa build-server-full server nopass
 
 # Generate shared-secret for TLS Authentication
@@ -19,15 +19,20 @@ openvpn --genkey --secret pki/ta.key
 
 # Copy certificates and the server configuration in the openvpn directory
 cp /etc/openvpn/easy-rsa/pki/{ca.crt,ta.key,issued/server.crt,private/server.key,dh.pem} "/etc/openvpn/"
-cp /etc/openvpn/easy-rsa/pki/{issued/server.crt,private/server.key,ca.crt} "/app/openvpn/clients/pki/"
 cp "/app/openvpn/server.conf" "/etc/openvpn/"
+cp -rf "/app/openvpn/scripts" "/etc/openvpn/scripts"
+chmod +x /etc/openvpn/scripts/*.sh
 mkdir "/etc/openvpn/ccd"
 
-# Make ip forwading and make it persistent
+# PHP Client building
+cp /etc/openvpn/easy-rsa/pki/{ca.crt,ta.key} "/app/openvpn/clients/pki/"
+chown www-data:www-data /app/openvpn/clients/pki/*
+
+# Make ip forwarding and make it persistent
 echo 1 > "/proc/sys/net/ipv4/ip_forward"
 echo "net.ipv4.ip_forward = 1" >> "/etc/sysctl.conf"
 
-# Iptable rules
+# Iptables rules
 iptables -A FORWARD -i tun+ -j ACCEPT
 iptables -A FORWARD -i tun+ -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -i eth0 -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
