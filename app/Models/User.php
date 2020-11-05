@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -68,5 +69,31 @@ class User extends Authenticatable
     public function getProfilePhotoUrlAttribute()
     {
         return $this->google_photo_url ?: $this->defaultProfilePhotoUrl();
+    }
+
+    /**
+     * Search query scope.
+     *
+     * @param Builder $query
+     * @param string  $string
+     * @return Builder
+     */
+    public function scopeSearch(Builder $query, string $string)
+    {
+        return $query->where('name', 'like', '%' . $string . '%')->orWhere('email', 'like', '%' . $string . '%');
+    }
+
+    /**
+     * Search online query scope.
+     *
+     * @param Builder $query
+     * @param bool $online
+     * @return Builder
+     */
+    public function scopeOnline(Builder $query, bool $online)
+    {
+        if ($online == 1) {
+            return $query->where('is_online', 1);
+        }
     }
 }

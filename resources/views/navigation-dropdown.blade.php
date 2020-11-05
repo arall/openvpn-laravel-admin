@@ -12,9 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="/" :active="request()->routeIs('/')">
-                        {{ __('Dashboard') }}
+                    <x-jet-nav-link href="/">
+                        Dashboard
                     </x-jet-nav-link>
+                    @if(auth()->user()->is_admin)
+                        <x-jet-nav-link href="{{ route('admin.users') }}">
+                           Users
+                        </x-jet-nav-link>
+                    @endif
                 </div>
             </div>
 
