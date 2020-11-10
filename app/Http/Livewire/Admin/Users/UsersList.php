@@ -26,6 +26,21 @@ class UsersList extends Component
     public $isOnline = 0;
 
     /**
+     * @var string
+     */
+    public $sortField = 'id';
+
+    /**
+     * @var string
+     */
+    public $sortDirection = 'asc';
+
+    /**
+     * @var string[]
+     */
+    public $queryString = ['sortField', 'sortDirection'];
+
+    /**
      * Render the view.
      *
      * @return View
@@ -33,7 +48,26 @@ class UsersList extends Component
     public function render()
     {
         return view('livewire.admin.users.list', [
-            'users' => User::search($this->search)->online($this->isOnline)->paginate(5),
+            'users' => User::search($this->search)->online($this->isOnline)->orderBy($this->sortField, $this->sortDirection)->paginate(5),
+            'total' => User::all()->count(),
+            'online' => User::online(1)->count(),
+            'offline' => User::online(0)->count(),
         ]);
+    }
+
+    /**
+     * Sort columns.
+     *
+     * @param $field
+     */
+    public function sortBy($field)
+    {
+        if ($this->sortField == $field) {
+            $this->sortDirection = $this->sortDirection ===  'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortDirection = 'asc';
+        }
+
+        $this->sortField = $field;
     }
 }

@@ -1,7 +1,16 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        User list
-    </h2>
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                User list
+            </h2>
+        </div>
+        <div class="col-span-1 text-right">
+            Registered: {{ $total }} |
+            <span class="text-green-500">Online: {{ $online }} </span> |
+            <span class="text-red-500">Offline: {{ $offline }} </span>
+        </div>
+    </div>
 </x-slot>
 
 <div class="container mx-auto py-6 px-4">
@@ -34,13 +43,14 @@
     <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
         <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
             <thead>
-                <tr class="text-left">
-                    <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">ID</th>
-                    <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Name</th>
-                    <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Role</th>
-                    <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Email</th>
-                    <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Status</th>
-                </tr>
+            <tr class="text-left">
+                <x-table.sortable :direction="$sortField === 'id' ? $sortDirection : null">ID</x-table.sortable>
+                <x-table.sortable :direction="$sortField === 'name' ? $sortDirection : null">Name</x-table.sortable>
+                <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Role</th>
+                <x-table.sortable :direction="$sortField === 'locatiom' ? $sortDirection : null">Location</x-table.sortable>
+                <x-table.sortable :direction="$sortField === 'email' ? $sortDirection : null">Email</x-table.sortable>
+                <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Status</th>
+            </tr>
             </thead>
             <tbody>
             @foreach ($users as $user)
@@ -62,6 +72,9 @@
                                 User
                             @endif
                         </span>
+                    </td>
+                    <td class="border-dashed border-t border-gray-200">
+                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $user->getLocation() }}</span>
                     </td>
                     <td class="border-dashed border-t border-gray-200">
                         <span class="text-gray-700 px-6 py-3 flex items-center">{{ $user->email }}</span>
