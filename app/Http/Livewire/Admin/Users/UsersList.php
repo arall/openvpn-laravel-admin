@@ -47,8 +47,14 @@ class UsersList extends Component
      */
     public function render()
     {
+        $query = User::search($this->search);
+
+        if ($this->isOnline) {
+            $query->online($this->isOnline);
+        }
+
         return view('livewire.admin.users.list', [
-            'users' => User::search($this->search)->online($this->isOnline)->orderBy($this->sortField, $this->sortDirection)->paginate(5),
+            'users' => $query->orderBy($this->sortField, $this->sortDirection)->paginate(5),
             'total' => User::all()->count(),
             'online' => User::online(1)->count(),
             'offline' => User::online(0)->count(),

@@ -54,7 +54,7 @@ class User extends Authenticatable
      */
     public function getLocation()
     {
-        return Location::get($this->ip)->countryName;
+        return $this->ip ? Location::get($this->ip)->countryName : '';
     }
 
     /**
@@ -88,8 +88,6 @@ class User extends Authenticatable
      */
     public function scopeOnline(Builder $query, bool $online)
     {
-        if ($online == 1) {
-            return $query->where('is_online', 1);
-        }
+        return $query->where('is_online', $online);
     }
 }
