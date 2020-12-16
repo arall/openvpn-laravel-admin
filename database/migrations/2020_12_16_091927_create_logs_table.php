@@ -19,7 +19,6 @@ class CreateLogsTable extends Migration
             $table->string('client_ip');
             $table->integer('client_port');
             $table->string('client_location')->nullable();
-            $table->string('local_ip');
             $table->string('remote_ip');
             $table->integer('remote_port');
             $table->integer('bytes_received')->default(0);

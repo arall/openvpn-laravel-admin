@@ -17,7 +17,6 @@ class Log extends Model
         'client_ip',
         'client_port',
         'client_location',
-        'local_ip',
         'remote_ip',
         'remote_port',
         'bytes_received',

@@ -13,7 +13,7 @@ class Disconnect extends Command
      *
      * @var string
      */
-    protected $signature = 'openvpn:disconnect {user} {local_ip} {bytes_received=0} {bytes_sent=0}';
+    protected $signature = 'openvpn:disconnect {user} {remote_ip} {bytes_received=0} {bytes_sent=0}';
 
     /**
      * The console command description.
@@ -29,7 +29,7 @@ class Disconnect extends Command
     {
         $user = User::where('email', $this->argument('user'))->firstOrFail();
 
-        $log = $user->logs()->where('local_ip', $this->argument('local_ip'))->firstOrFail();
+        $log = $user->logs()->where('remote_ip', $this->argument('remote_ip'))->firstOrFail();
         $log->bytes_received = $this->argument('bytes_received');
         $log->bytes_sent = $this->argument('bytes_sent');
         $log->end_time = Carbon::now();
