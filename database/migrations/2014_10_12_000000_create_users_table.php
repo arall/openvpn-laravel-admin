@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('google_id')->nullable();
             $table->string('google_photo_url')->nullable();
-            $table->string('ip')->nullable();
             $table->string('is_online')->default(0);
             $table->timestamps();
         });

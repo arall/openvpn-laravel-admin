@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use Location;
 
 class User extends Authenticatable
 {
@@ -48,13 +47,21 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the IP location of the user.
-     *
-     * @return string
+     * Set the user as online.
      */
-    public function getLocation()
+    public function setOnline()
     {
-        return $this->ip ? Location::get($this->ip)->countryName : '';
+        $this->is_online = 1;
+        $this->save();
+    }
+
+    /**
+     * Set the user as offline.
+     */
+    public function setOffline()
+    {
+        $this->is_online = 0;
+        $this->save();
     }
 
     /**
@@ -89,5 +96,13 @@ class User extends Authenticatable
     public function scopeOnline(Builder $query, bool $online)
     {
         return $query->where('is_online', $online);
+    }
+
+    /**
+     * Get all of the logs for the user.
+     */
+    public function logs()
+    {
+        return $this->hasMany(Log::class);
     }
 }
