@@ -74,7 +74,7 @@
                         </span>
                     </td>
                     <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $user->getLocation() }}</span>
+                        <span class="text-gray-700 px-6 py-3 flex items-center">-</span>
                     </td>
                     <td class="border-dashed border-t border-gray-200">
                         <span class="text-gray-700 px-6 py-3 flex items-center">{{ $user->email }}</span>
