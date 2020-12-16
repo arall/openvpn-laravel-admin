@@ -37,7 +37,7 @@ class Connect extends Command
             'bytes_received' => $this->argument('bytes_received'),
             'bytes_sent' => $this->argument('bytes_sent'),
         ]);
-
+        
         $user->setOnline();
     }
 }
