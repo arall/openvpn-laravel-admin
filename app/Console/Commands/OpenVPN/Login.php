@@ -26,7 +26,10 @@ class Login extends Command
      */
     public function handle()
     {
-        if (Auth::attempt([$this->argument('user'), $this->argument('password')])) {
+        if (Auth::attempt([
+            'email' => $this->argument('user'),
+            'password' => $this->argument('password')
+            ])) {
             echo 'ok';
         } else {
             echo 'ko';
