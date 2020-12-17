@@ -19,6 +19,9 @@
                         <x-jet-nav-link href="{{ route('admin.users') }}">
                            Users
                         </x-jet-nav-link>
+                        <x-jet-nav-link href="{{ route('admin.logs') }}">
+                            Logs
+                        </x-jet-nav-link>
                     @endif
                 </div>
             </div>

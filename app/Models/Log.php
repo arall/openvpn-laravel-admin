@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Location;
 
@@ -55,6 +56,22 @@ class Log extends Model
             $log->client_location = Location::get($log->client_ip)->countryName;
             $log->save();
         });
+    }
+
+    /**
+     * Search active query scope.
+     *
+     * @param Builder $query
+     * @param bool $active
+     * @return Builder
+     */
+    public function scopeActive(Builder $query, bool $active)
+    {
+        if ($active) {
+            return $query->whereNull('end_time');
+        }
+
+        return $query->whereNotNull('end_time');
     }
 
     /**

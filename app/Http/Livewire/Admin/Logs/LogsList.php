@@ -1,29 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\Admin\Users;
+
+namespace App\Http\Livewire\Admin\Logs;
 
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
+use App\Models\Log;
 
-class UsersList extends Component
+class LogsList extends Component
 {
     use WithPagination;
 
     /**
-     * Search query
-     *
-     * @var string
-     */
-    public $search = '';
-
-    /**
-     * Online filter
+     * Active filter
      *
      * @var bool
      */
-    public $isOnline = 0;
+    public $isActive = 0;
 
     /**
      * @var string
@@ -47,17 +41,17 @@ class UsersList extends Component
      */
     public function render()
     {
-        $query = User::search($this->search);
+        $query = Log::query();
 
-        if ($this->isOnline) {
-            $query->online($this->isOnline);
+        if ($this->isActive) {
+            $query->active($this->isActive);
         }
 
-        return view('livewire.admin.users.list', [
-            'users' => $query->orderBy($this->sortField, $this->sortDirection)->paginate(20),
-            'total' => User::all()->count(),
-            'online' => User::online(1)->count(),
-            'offline' => User::online(0)->count(),
+        return view('livewire.admin.logs.list', [
+            'logs' => $query->orderBy($this->sortField, $this->sortDirection)->paginate(20),
+            'total' => Log::all()->count(),
+            'active' => Log::active(1)->count(),
+            'inactive' => Log::active(0)->count(),
         ]);
     }
 
@@ -69,7 +63,7 @@ class UsersList extends Component
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortDirection = $this->sortDirection ===  'asc' ? 'desc' : 'asc';
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortDirection = 'asc';
         }

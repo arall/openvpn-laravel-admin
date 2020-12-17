@@ -30,3 +30,4 @@ Route::get('/', App\Http\Livewire\Vpn::class)->middleware('auth');
  * Admin
  */
 Route::get('/admin/users', App\Http\Livewire\Admin\Users\UsersList::class)->name('admin.users')->middleware('auth.admin');
+Route::get('/admin/logs', App\Http\Livewire\Admin\Logs\LogsList::class)->name('admin.logs')->middleware('auth.admin');

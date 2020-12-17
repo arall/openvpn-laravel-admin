@@ -29,7 +29,8 @@ class Disconnect extends Command
     {
         $user = User::where('email', $this->argument('user'))->firstOrFail();
 
-        $log = $user->logs()->where('remote_ip', $this->argument('remote_ip'))->whereNull('end_time')->firstOrFail();
+        $log = $user->logs()->active(true)->where('remote_ip', $this->argument('remote_ip'))->firstOrFail();
+
         $log->bytes_received = $this->argument('bytes_received');
         $log->bytes_sent = $this->argument('bytes_sent');
         $log->end_time = Carbon::now();
