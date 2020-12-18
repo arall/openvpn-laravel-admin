@@ -27,8 +27,8 @@ class ApiController extends Controller
             'client_port' => $request->input('client_port'),
             'remote_ip' => $request->input('remote_ip'),
             'remote_port' => $request->input('remote_port'),
-            'bytes_received' => $request->input('bytes_received'),
-            'bytes_sent' => $request->input('bytes_sent'),
+            'bytes_received' => $request->input('bytes_received') ?: 0,
+            'bytes_sent' => $request->input('bytes_sent') ?: 0,
         ]);
 
         $user->setOnline();
@@ -42,8 +42,8 @@ class ApiController extends Controller
 
         $log = $user->logs()->active(true)->where('remote_ip', $request->input('remote_ip'))->firstOrFail();
 
-        $log->bytes_received = $request->input('bytes_received');
-        $log->bytes_sent = $request->input('bytes_sent');
+        $log->bytes_received = $request->input('bytes_received') ?: 0;
+        $log->bytes_sent = $request->input('bytes_sent') ?: 0;
         $log->end_time = Carbon::now();
         $log->save();
 
