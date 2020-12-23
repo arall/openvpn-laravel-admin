@@ -28,7 +28,7 @@
             <thead>
             <tr class="text-left">
                 <x-table.sortable :direction="$sortField === 'id' ? $sortDirection : null">ID</x-table.sortable>
-                <x-table.sortable :direction="$sortField === 'user_id' ? $sortDirection : null">User</x-table.sortable>
+                <x-table.sortable :direction="$sortField === 'user_id' ? $sortDirection : null" :field="'user_id'">User</x-table.sortable>
                 <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Client IP</th>
                 <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Location</th>
                 <x-table.sortable :direction="$sortField === 'remote_ip' ? $sortDirection : null">Remote IP</x-table.sortable>

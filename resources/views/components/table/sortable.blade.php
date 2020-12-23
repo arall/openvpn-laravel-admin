@@ -1,10 +1,11 @@
 @props([
     'direction' => null,
+    'field' => null,
 ])
 
 <th
         class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs"
-        wire:click="sortBy('{{ strtolower($slot)  }}')"
+        wire:click="sortBy('{{ strtolower(str_replace(' ', '_', isset($field) ? $field : $slot))  }}')"
         :direction="asc"
 >
     <span class="cursor-pointer inline-flex items-center">
