@@ -47,7 +47,6 @@
                 <x-table.sortable :direction="$sortField === 'id' ? $sortDirection : null">ID</x-table.sortable>
                 <x-table.sortable :direction="$sortField === 'name' ? $sortDirection : null">Name</x-table.sortable>
                 <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Role</th>
-                <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Location</th>
                 <x-table.sortable :direction="$sortField === 'email' ? $sortDirection : null">Email</x-table.sortable>
                 <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Status</th>
             </tr>
@@ -72,9 +71,6 @@
                                 User
                             @endif
                         </span>
-                    </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">-</span>
                     </td>
                     <td class="border-dashed border-t border-gray-200">
                         <span class="text-gray-700 px-6 py-3 flex items-center">{{ $user->email }}</span>
