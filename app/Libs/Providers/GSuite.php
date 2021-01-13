@@ -158,11 +158,19 @@ class GSuite
     {
         $service = new Google_Service_Directory($this->client);
 
-        $results = $service->users->listUsers(['domain' => $this->domain]);
         $result = [];
-        foreach ($results->getUsers() as $user) {
-            $result[] = $user;
-        }
+        $pageToken = null;
+        $params = ['domain' => $this->domain];
+        do {
+            if ($pageToken) {
+                $params['pageToken'] = $pageToken;
+            }
+            $results = $service->users->listUsers($params);
+            $pageToken = $results->getNextPageToken();
+            foreach ($results->getUsers() as $user) {
+                $result[] = $user;
+            }
+        } while ($pageToken);
 
         return $result;
     }
