@@ -59,6 +59,23 @@ class Log extends Model
     }
 
     /**
+     * Search query scope.
+     *
+     * @param Builder $query
+     * @param string  $string
+     * @return Builder
+     */
+    public function scopeSearch(Builder $query, string $string)
+    {
+        return $query->where('client_ip', 'like', '%' . $string . '%')
+            ->orWhere('remote_ip', 'like', '%' . $string . '%')
+            ->orWhereHas('user', function($query) use ($string) {
+                $query->where('name', 'like', '%' . $string . '%')
+                    ->orWhere('email', 'like', '%' . $string . '%');
+            });
+    }
+
+    /**
      * Search active query scope.
      *
      * @param Builder $query

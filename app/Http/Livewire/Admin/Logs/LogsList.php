@@ -13,6 +13,13 @@ class LogsList extends Component
     use WithPagination;
 
     /**
+     * Search query
+     *
+     * @var string
+     */
+    public $search = '';
+
+    /**
      * Active filter
      *
      * @var bool
@@ -41,7 +48,7 @@ class LogsList extends Component
      */
     public function render()
     {
-        $query = Log::query();
+        $query = Log::search($this->search);
 
         if ($this->isActive) {
             $query->active($this->isActive);
