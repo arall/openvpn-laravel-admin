@@ -12,6 +12,43 @@
 
 namespace App\Models{
 /**
+ * App\Models\Log
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $client_ip
+ * @property int $client_port
+ * @property string|null $client_location
+ * @property string $remote_ip
+ * @property int $remote_port
+ * @property int $bytes_received
+ * @property int $bytes_sent
+ * @property \Illuminate\Support\Carbon $start_time
+ * @property \Illuminate\Support\Carbon|null $end_time
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Log active($active)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log date($date)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Log search($string)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereBytesReceived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereBytesSent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereClientIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereClientLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereClientPort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereEndTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereRemoteIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereRemotePort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereStartTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Log whereUserId($value)
+ */
+	class Log extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\User
  *
  * @property int $id
@@ -27,6 +64,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $profile_photo_url
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Log[] $logs
+ * @property-read int|null $logs_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens

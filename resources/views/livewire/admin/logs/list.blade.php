@@ -1,7 +1,7 @@
 <x-slot name="header">
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Logs
             </h2>
         </div>
@@ -13,12 +13,12 @@
     </div>
 </x-slot>
 
-<div class="container mx-auto py-6 px-4">
-    <div class="mb-4 flex justify-between items-center">
+<div class="container px-4 py-6 mx-auto">
+    <div class="flex items-center justify-between mb-4">
         <div class="flex-1 pr-4">
-            <div class="relative md:w-1/3">
+            <div class="relative md:w-2/3">
                 <input type="search"
-                       class="w-full pl-10 pr-4 py-2 rounded-lg shadow focus:outline-none focus:shadow-outline text-gray-600 font-medium"
+                       class="w-full py-2 pl-10 pr-4 font-medium text-gray-600 rounded-lg shadow focus:outline-none focus:shadow-outline"
                        wire:model="search"
                        placeholder="Search...">
                 <div class="absolute top-0 left-0 inline-flex items-center p-2">
@@ -32,6 +32,14 @@
                 </div>
             </div>
         </div>
+        <div class="flex-1 pr-4">
+            <div class="relative md:w-2/3">
+                <input type="search"
+                       class="w-full py-2 pl-10 pr-4 font-medium text-gray-600 rounded-lg shadow focus:outline-none focus:shadow-outline"
+                       wire:model="date"
+                       placeholder="YYY-MM-DD">
+            </div>
+        </div>
         <div>
             <div class="mr-4">
                 Active
@@ -40,53 +48,45 @@
         </div>
     </div>
 
-    <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
-        <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+    <div class="relative overflow-x-auto overflow-y-auto bg-white rounded-lg shadow">
+        <table class="relative w-full whitespace-no-wrap bg-white border-collapse table-auto table-striped">
             <thead>
             <tr class="text-left">
                 <x-table.sortable :direction="$sortField === 'id' ? $sortDirection : null">ID</x-table.sortable>
                 <x-table.sortable :direction="$sortField === 'user_id' ? $sortDirection : null" :field="'user_id'">User</x-table.sortable>
-                <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Client IP</th>
-                <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-2 text-gray-600 font-bold tracking-wider uppercase text-xs">Location</th>
+                <th class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-100 border-b border-gray-200">Client IP</th>
+                <th class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-100 border-b border-gray-200">Location</th>
                 <x-table.sortable :direction="$sortField === 'remote_ip' ? $sortDirection : null">Remote IP</x-table.sortable>
                 <x-table.sortable :direction="$sortField === 'bytes_received' ? $sortDirection : null">Bytes Received</x-table.sortable>
-                <x-table.sortable :direction="$sortField === 'bytes_sent' ? $sortDirection : null">Bytes Sent</x-table.sortable>
-                <x-table.sortable :direction="$sortField === 'start_time' ? $sortDirection : null">Start Time</x-table.sortable>
                 <x-table.sortable :direction="$sortField === 'end_time' ? $sortDirection : null">End Time</x-table.sortable>
             </tr>
             </thead>
             <tbody>
             @foreach ($logs as $log)
                 <tr>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->id }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->id }}</span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">
-                            <img class="h-8 w-8 rounded-full object-cover mr-3" src="{{ $log->user->google_photo_url }}">
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">
+                            <img class="object-cover w-8 h-8 mr-3 rounded-full" src="{{ $log->user->google_photo_url }}">
                             {{ $log->user->name }}
                         </span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->client_ip }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->client_ip }}</span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->client_location }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->client_location }}</span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->remote_ip }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->remote_ip }}</span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->bytes_received }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->start_time }}</span>
                     </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->bytes_sent }}</span>
-                    </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->start_time }}</span>
-                    </td>
-                    <td class="border-dashed border-t border-gray-200">
-                        <span class="text-gray-700 px-6 py-3 flex items-center">{{ $log->end_time }}</span>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->end_time }}</span>
                     </td>
                 </tr>
             @endforeach
@@ -94,7 +94,7 @@
         </table>
     </div>
 
-    <div class="mb-4 flex justify-between items-center mt-4">
+    <div class="flex items-center justify-between mt-4 mb-4">
         <div class="flex-1 pr-4">
             {{ $logs->links() }}
         </div>

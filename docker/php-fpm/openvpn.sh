@@ -20,11 +20,12 @@ openvpn --genkey --secret pki/ta.key
 # Copy certificates and the server configuration in the openvpn directory
 cp /etc/openvpn/easy-rsa/pki/{ca.crt,ta.key,issued/server.crt,private/server.key,dh.pem} "/etc/openvpn/"
 cp "/app/openvpn/server.conf" "/etc/openvpn/"
-cp -rf "/app/openvpn/scripts" "/etc/openvpn/scripts"
+cp -r "/app/openvpn/scripts_remote" "/etc/openvpn/scripts"
 chmod +x /etc/openvpn/scripts/*.sh
 mkdir "/etc/openvpn/ccd"
 
 # PHP Client building
+mkdir /app/openvpn/clients/pki/
 cp /etc/openvpn/easy-rsa/pki/{ca.crt,ta.key} "/app/openvpn/clients/pki/"
 chown www-data:www-data /app/openvpn/clients/pki/*
 

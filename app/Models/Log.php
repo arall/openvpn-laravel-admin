@@ -63,16 +63,34 @@ class Log extends Model
      *
      * @param Builder $query
      * @param string  $string
+     * @param string  $date
      * @return Builder
      */
     public function scopeSearch(Builder $query, string $string)
     {
-        return $query->where('client_ip', 'like', '%' . $string . '%')
-            ->orWhere('remote_ip', 'like', '%' . $string . '%')
-            ->orWhereHas('user', function($query) use ($string) {
+        return $query->where('client_ip', $string)
+            ->orWhere('remote_ip', $string)
+            ->orWhereHas('user', function ($query) use ($string) {
                 $query->where('name', 'like', '%' . $string . '%')
                     ->orWhere('email', 'like', '%' . $string . '%');
             });
+    }
+
+    /**
+     * Date query scope.
+     *
+     * @param Builder $query
+     * @param string  $date
+     * @return Builder
+     */
+    public function scopeDate(Builder $query, $date)
+    {
+        $start = $date . ' 00:00:00';
+        $end = $date . ' 23:59:59';
+
+        return $query->where('start_time', '>=', $start)->where(function ($query) use ($end) {
+            $query->whereNull('end_time')->orWhere('end_time', '<=', $end);
+        });
     }
 
     /**

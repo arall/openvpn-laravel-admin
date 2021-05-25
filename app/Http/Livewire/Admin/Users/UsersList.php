@@ -33,7 +33,7 @@ class UsersList extends Component
     /**
      * @var string
      */
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     /**
      * @var string[]

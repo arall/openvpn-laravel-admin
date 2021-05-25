@@ -20,6 +20,13 @@ class LogsList extends Component
     public $search = '';
 
     /**
+     * Date query
+     *
+     * @var string
+     */
+    public $date;
+
+    /**
      * Active filter
      *
      * @var bool
@@ -34,7 +41,7 @@ class LogsList extends Component
     /**
      * @var string
      */
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     /**
      * @var string[]
@@ -49,6 +56,10 @@ class LogsList extends Component
     public function render()
     {
         $query = Log::search($this->search);
+
+        if ($this->date) {
+            $query->date($this->date);
+        }
 
         if ($this->isActive) {
             $query->active($this->isActive);
