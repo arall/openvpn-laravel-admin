@@ -23,7 +23,7 @@ class ApiController extends Controller
         $user = User::where('email', $request->input('user'))->firstOrFail();
 
         $user->logs()->create([
-            'server_ip' => $request->ip,
+            'server_ip' => $request->ip(),
             'client_ip' => $request->input('client_ip'),
             'client_port' => $request->input('client_port'),
             'remote_ip' => $request->input('remote_ip'),
@@ -42,7 +42,7 @@ class ApiController extends Controller
         $user = User::where('email', $request->input('user'))->firstOrFail();
 
         $log = $user->logs()->active(true)
-            ->where('server_ip', $request->ip)
+            ->where('server_ip', $request->ip())
             ->where('remote_ip', $request->input('remote_ip'))
             ->firstOrFail();
 
