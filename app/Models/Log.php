@@ -15,6 +15,7 @@ class Log extends Model
      * @var array
      */
     protected $fillable = [
+        'server_ip',
         'client_ip',
         'client_port',
         'client_location',
@@ -69,6 +70,7 @@ class Log extends Model
     public function scopeSearch(Builder $query, string $string)
     {
         return $query->where('client_ip', $string)
+            ->orWhere('server_ip', $string)
             ->orWhere('remote_ip', $string)
             ->orWhereHas('user', function ($query) use ($string) {
                 $query->where('name', 'like', '%' . $string . '%')

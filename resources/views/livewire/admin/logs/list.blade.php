@@ -54,6 +54,7 @@
             <tr class="text-left">
                 <x-table.sortable :direction="$sortField === 'id' ? $sortDirection : null">ID</x-table.sortable>
                 <x-table.sortable :direction="$sortField === 'user_id' ? $sortDirection : null" :field="'user_id'">User</x-table.sortable>
+                <th class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-100 border-b border-gray-200">Server IP</th>
                 <th class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-100 border-b border-gray-200">Client IP</th>
                 <th class="sticky top-0 px-6 py-2 text-xs font-bold tracking-wider text-gray-600 uppercase bg-gray-100 border-b border-gray-200">Location</th>
                 <x-table.sortable :direction="$sortField === 'remote_ip' ? $sortDirection : null">Remote IP</x-table.sortable>
@@ -72,6 +73,9 @@
                             <img class="object-cover w-8 h-8 mr-3 rounded-full" src="{{ $log->user->google_photo_url }}">
                             {{ $log->user->name }}
                         </span>
+                    </td>
+                    <td class="border-t border-gray-200 border-dashed">
+                        <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->server_ip }}</span>
                     </td>
                     <td class="border-t border-gray-200 border-dashed">
                         <span class="flex items-center px-6 py-3 text-gray-700">{{ $log->client_ip }}</span>
